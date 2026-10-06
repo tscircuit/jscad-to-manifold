@@ -34,18 +34,25 @@
     "typecheck": "tsc --noEmit",
     "test": "bun test",
     "check": "bun run typecheck && bun test && bun run build",
-    "prepare": "npm run build"
+    "prepare": "npm run build",
+    "test:visual": "bun test tests/visual.test.ts",
+    "snapshots:update": "UPDATE_SNAPSHOTS=1 bun test tests/visual.test.ts"
   },
   "dependencies": {
     "earcut": "^3.0.2",
     "jscad-planner": "^0.0.19"
   },
   "devDependencies": {
+    "@gltf-transform/core": "^4.5.1",
     "@jscad/modeling": "^2.13.0",
+    "@tscircuit/alphabet": "^0.0.23",
     "@types/bun": "^1.3.8",
     "@types/earcut": "^3.0.0",
     "@types/node": "^22.0.0",
+    "@types/pngjs": "^6.0.5",
     "manifold-3d": "^3.5.4",
+    "pngjs": "^7.0.0",
+    "poppygl": "^0.0.34",
     "tsup": "^8.5.1",
     "typescript": "^5.9.2"
   }

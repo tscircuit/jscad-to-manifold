@@ -88,3 +88,31 @@ bun run check
 
 Checks include TypeScript, integration tests against real Manifold WASM and
 JSCAD, and ESM/CommonJS builds with declarations. Manifold is not bundled.
+
+## Visual snapshots
+
+Five PoppyGL baselines cover boolean holes, rounded surfaces, twisted polygon
+extrusion with a hole, partial revolution, and transformed custom polygon meshes.
+The test helper exports `solid.getMesh()` to an embedded GLB using Manifold's
+`writeMesh` and glTF Transform, then renders a 480×480 PNG with a fixed camera,
+material, and studio lighting. Export and rendering dependencies are development
+only; the converter still receives Manifold through injection.
+
+| Boolean plate | Rounded housing |
+| --- | --- |
+| ![Plate with four holes](tests/__snapshots__/plate-with-holes.png) | ![Rounded housing](tests/__snapshots__/rounded-housing.png) |
+| Twisted polygon with a hole | Partial revolution |
+| ![Twisted polygon](tests/__snapshots__/twisted-polygon-with-hole.png) | ![Partial revolution](tests/__snapshots__/partial-revolution.png) |
+
+![Transformed concave mesh](tests/__snapshots__/transformed-concave-mesh.png)
+
+```sh
+bun run test:visual       # compare against committed baselines
+bun run snapshots:update # intentionally regenerate baselines; review PNG diffs
+```
+
+`bun test` and `bun run check` include the visual tests. Tests compare decoded
+RGBA pixels exactly, rather than PNG compression bytes. Missing baselines fail
+unless the explicit update command is used. Blank renders fail even in update
+mode. A mismatch writes the actual PNG, a magenta pixel diff, and the input GLB
+into ignored `tests/__artifacts__/`; CI uploads these files when checks fail.
