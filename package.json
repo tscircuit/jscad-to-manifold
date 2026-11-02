@@ -1,5 +1,5 @@
 {
-  "name": "jscad-to-manifold",
+  "name": "@tscircuit/jscad-to-manifold",
   "version": "0.0.1",
   "description": "Convert jscad-planner trees to solids using an injected manifold-3d module",
   "type": "module",
@@ -34,13 +34,9 @@
     "typecheck": "tsc --noEmit",
     "test": "bun test",
     "check": "bun run typecheck && bun test && bun run build",
-    "prepare": "npm run build",
     "test:visual": "bun test tests/visual.test.ts",
-    "snapshots:update": "UPDATE_SNAPSHOTS=1 bun test tests/visual.test.ts"
-  },
-  "dependencies": {
-    "earcut": "^3.0.2",
-    "jscad-planner": "^0.0.19"
+    "snapshots:update": "UPDATE_SNAPSHOTS=1 bun test tests/visual.test.ts",
+    "prepack": "bun run build"
   },
   "devDependencies": {
     "@gltf-transform/core": "^4.5.1",
@@ -54,6 +50,14 @@
     "pngjs": "^7.0.0",
     "poppygl": "^0.0.34",
     "tsup": "^8.5.1",
-    "typescript": "^5.9.2"
+    "typescript": "^5.9.2",
+    "earcut": "^3.0.2",
+    "jscad-planner": "^0.0.19"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
+  "peerDependencies": {
+    "jscad-planner": "*"
   }
 }

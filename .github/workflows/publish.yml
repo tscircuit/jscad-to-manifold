@@ -1,0 +1,33 @@
+name: Publish to GitHub Packages
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+      - name: Verify release tag
+        run: |
+          VERSION=$(bun -p 'require("./package.json").version')
+          test "$GITHUB_REF_NAME" = "v$VERSION"
+      # Install before setup-node configures the GitHub Packages scope.
+      - run: bun install --frozen-lockfile
+      - run: bun run check
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          registry-url: https://npm.pkg.github.com
+          scope: "@tscircuit"
+      - name: Publish built package
+        run: npm publish --ignore-scripts
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
