@@ -1,13 +1,9 @@
 {
-  "lockfileVersion": 2,
-  "configVersion": 0,
+  "lockfileVersion": 1,
+  "configVersion": 1,
   "workspaces": {
     "": {
-      "name": "jscad-to-manifold",
-      "dependencies": {
-        "earcut": "^3.0.2",
-        "jscad-planner": "^0.0.19",
-      },
+      "name": "@tscircuit/jscad-to-manifold",
       "devDependencies": {
         "@gltf-transform/core": "^4.5.1",
         "@jscad/modeling": "^2.13.0",
@@ -16,11 +12,16 @@
         "@types/earcut": "^3.0.0",
         "@types/node": "^22.0.0",
         "@types/pngjs": "^6.0.5",
+        "earcut": "^3.0.2",
+        "jscad-planner": "^0.0.19",
         "manifold-3d": "^3.5.4",
         "pngjs": "^7.0.0",
         "poppygl": "^0.0.34",
         "tsup": "^8.5.1",
         "typescript": "^5.9.2",
+      },
+      "peerDependencies": {
+        "jscad-planner": "*",
       },
     },
   },

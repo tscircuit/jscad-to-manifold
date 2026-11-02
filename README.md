@@ -1,4 +1,4 @@
-# jscad-to-manifold
+# @tscircuit/jscad-to-manifold
 
 Convert a serializable `jscad-planner` operation tree into a native `manifold-3d`
 solid. Boolean operations and transformations execute directly in Manifold;
@@ -8,16 +8,16 @@ Manifold is **injected**, with no runtime or peer dependency on `manifold-3d`.
 The application chooses its version and controls WASM loading and initialization.
 The package uses Manifold only as a development dependency for integration tests.
 
-Install from the repository (builds automatically on installation):
+Install the published package and its planner peer:
 
 ```sh
-npm install github:tscircuit/jscad-to-manifold manifold-3d
+npm install https://jscdn.tscircuit.com/@tscircuit/jscad-to-manifold/0.0.1.tgz jscad-planner manifold-3d
 ```
 
 ```ts
 import Module from "manifold-3d"
 import { jscadPlanner as p } from "jscad-planner"
-import { jscadToManifold } from "jscad-to-manifold"
+import { jscadToManifold } from "@tscircuit/jscad-to-manifold"
 
 const manifold = await Module()
 manifold.setup()
@@ -116,3 +116,10 @@ RGBA pixels exactly, rather than PNG compression bytes. Missing baselines fail
 unless the explicit update command is used. Blank renders fail even in update
 mode. A mismatch writes the actual PNG, a magenta pixel diff, and the input GLB
 into ignored `tests/__artifacts__/`; CI uploads these files when checks fail.
+
+## Publishing
+
+Set `package.json` to the release version, then push a matching `v<version>` tag.
+The release workflow verifies the tag, runs the tests and build, and publishes
+the built ESM, CommonJS and declaration files to GitHub Packages. JSCDN exposes
+the versioned package URL shown above. Consumers do not run a build script.
