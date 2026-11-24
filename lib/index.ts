@@ -206,7 +206,7 @@ export function jscadToManifold<S extends SolidLike<S>, C extends CrossSectionLi
         const twist = finite(op.options.twistAngle ?? 0, "twistAngle")
         const steps = op.options.twistSteps ?? 1
         if (!Number.isInteger(steps) || steps < 1) throw new Error("twistSteps must be a positive integer")
-        const result = solid(requireSection(evaluate(op.shape)).extrude(Math.abs(height), twist ? steps - 1 : 0, degrees(twist)))
+        const result = solid(requireSection(evaluate(op.shape)).extrude(Math.abs(height), twist ? steps - 1 : 0, -degrees(twist)))
         return height < 0 ? solid(requireSolid(result).scale([1, 1, -1])) : result
       }
       case "extrudeRotate": {

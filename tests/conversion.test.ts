@@ -63,6 +63,11 @@ test("linear twist and full/partial revolution produce valid solids", () => {
   const half = convert(p.extrusions.extrudeRotate({segments:64,angle:Math.PI,startAngle:Math.PI/2},profile))
   try { expect(full.volume()).toBeCloseTo(Math.PI*20,0); expect(half.volume()).toBeCloseTo(full.volume()/2,4); expect(half.boundingBox().max[0]).toBeCloseTo(0,6) } finally {full.delete();half.delete()}
 })
+
+test("linear twist follows the JSCAD rotation direction", () => {
+  check(p.extrusions.extrudeLinear({height:4,twistAngle:Math.PI/2,twistSteps:32},p.primitives.rectangle({size:[2,2]})))
+  check(p.extrusions.extrudeLinear({height:4,twistAngle:-Math.PI/2,twistSteps:32},p.primitives.rectangle({size:[2,2]})))
+})
 test("hull, hullChain and rounded cuboid", () => {
   const cubes = [0,4,8].map((x)=>p.primitives.cube({size:2,center:[x,0,0]}))
   check(p.hulls.hull(...cubes),40)
